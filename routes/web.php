@@ -23,8 +23,8 @@ Route::post('handdle-register', [UserController::class, 'register'])->name('hand
 
 
 Route::middleware(['auth','revalidate'])->group(function () {
-
     Route::get('dashboard', function (){ return view('dashboard');})->name('dashboard.home');
+
     Route::get('master', function (){ return view('master');})->name('master');
     Route::post('logout', [UserController::class, 'logout'])->name('logout');
 

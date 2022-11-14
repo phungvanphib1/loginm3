@@ -59,6 +59,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="{{ asset('assets/js/flot-chart/excanvas.min.js')}}"></script><![endif]-->
 <script src="{{ asset('assets/js/jquery.scrollTo.js')}}"></script>
 <!-- morris JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
 <script src="{{ asset('AdminTheme/ckeditor/ckeditor.js') }}"></script> <!-- END THEME JS -->
     <script>
@@ -135,6 +137,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
        }
         @endphp
 	</script>
+    <script>
+        jQuery(document).ready(function() {
+            if ($('#blah').hide()) {
+                $('#blah').hide();
+            }
+            jQuery('#inputFile').change(function() {
+                $('#blah').show();
+                const file = jQuery(this)[0].files;
+                if (file[0]) {
+                    jQuery('#blah').attr('src', URL.createObjectURL(file[0]));
+                    jQuery('#blah1').attr('src', URL.createObjectURL(file[0]));
+                }
+            });
+        });
+    </script>
 	<!-- //calendar -->
 </body>
 </html>

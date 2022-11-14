@@ -25,8 +25,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="w3layouts-main">
 	<h2>Đăng nhập Now</h2>
 		<form action="{{ Route('handdle-login') }}" method="post">
+
             @csrf
-			<input type="email" class="ggg" name="email" placeholder="E-MAIL" required="">
+			<input type="email" class="ggg"  value="{{old('email')}}" name="email" placeholder="E-MAIL" required="">
 			<input type="password" class="ggg" name="password" placeholder="MẬT KHẨU" required="">
 			<span><input type="checkbox" />Lưu</span>
 			<h6><a href="#">Quên mật khẩu</a></h6>
@@ -43,5 +44,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{ asset('assets/js/jquery.nicescroll.js')}}"></script>
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js')}}"></script><![endif]-->
 <script src="{{ asset('assets/js/jquery.scrollTo.js')}}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+        @php
+       if(Session::has('message')){
+       @endphp
+       Swal.fire({
+            icon: 'error',
+            title: 'Đăng nhập thất bại!',
+            text: "Thông tin đăng nhập không chính xác",
+            showClass: {
+            popup: 'swal2-show'
+                }
+            })
+        @php
+       }
+        @endphp
+</script>
 </body>
 </html>

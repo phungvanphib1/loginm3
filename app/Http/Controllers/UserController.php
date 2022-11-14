@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\UserRequet;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,10 +16,16 @@ class UserController extends Controller
     //Hiển Thị Đăng Nhập
     public function viewLogin()
     {
-        return view('auth.login');
+        if (Auth::check()) {
+            return redirect()->route('dashboard.home');
+        } else {
+            return view('auth.login');
+        }
     }
+
     //xử lí đăng nhập
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -31,10 +38,13 @@ class UserController extends Controller
 
             return redirect()->route('dashboard.home');
         }
-        // dd($request->all());
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        $error = [
+            'message' => 'error',
+        ];
+        return back()->with($error);
+        // ->withErrors([
+        //     'email' => 'The provided credentials do not match our records.',
+        // ])->onlyInput('email');
     }
 
     //Hiển Thị Đăng Ký
@@ -43,7 +53,8 @@ class UserController extends Controller
         return view('auth.register');
     }
     //xử lí đăng ký
-    public function register(Request $request){
+    public function register(UserRequet $request)
+    {
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
@@ -52,7 +63,7 @@ class UserController extends Controller
             $user->save();
             return redirect()->route('login');
         } catch (\Exception $e) {
-            Log::error("message:".$e->getMessage());
+            Log::error("message:" . $e->getMessage());
         }
     }
 

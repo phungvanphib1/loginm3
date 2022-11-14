@@ -43,7 +43,8 @@
                                     <td><a href="{{ route('product.show', $product->id) }}">{{ $product->name }}</a></td>
                                     <td>{{ $product->categories->name }}</td>
                                     <td>{{ $product->amount }}</td>
-                                    <td>{{ $product->image }}</td>
+                                    {{-- <td> <img src="public/upload/{{ $product->image }}" height="100" width="100"></td> --}}
+                                   <td><img src="{{ asset('storage/images/' . $product->image) }}" alt="" width='120px' height="100px"></td>
                                     <td>
                                         <a href="{{ route('product.edit', $product->id) }}"
                                             class="w3-button w3-blue">Sửa</a>

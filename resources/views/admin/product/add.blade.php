@@ -85,10 +85,26 @@
                                                     @endforeach
                                                 </select>
                                                 @if ('category_id')
-                                                <p style="color:red">{{ $errors->first('category_id') }}</p>
-                                            @endif
+                                                    <p style="color:red">{{ $errors->first('category_id') }}</p>
+                                                @endif
                                             </div>
-                                            <div class="form-group col-lg-6">
+                                            <div class="form-group has-warning">
+                                                <label class="col-lg-3 control-label">image</label>
+                                                <div class="col-lg-6">
+                                                    {{-- <input accept="images/*" type='file' id="inputFile" name="image" /><br>
+                                                    @error('image')
+                                                        <div class="text text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                    <br>
+                                                    <img type="hidden" width="90px" height="90px" id="blah" src="" alt="" /> --}}
+                                                    <input accept="image/*" type='file' id="inputFile"
+                                                        name="image" /><br>
+                                                    <br>
+                                                    <img type="hidden" width="90px" height="90px" id="blah"
+                                                        src="#" alt="" />
+                                                </div>
+                                            </div>
+                                            {{-- <div class="form-group col-lg-6">
                                                 <label class="control-label" for="flatpickr01">Hìnhh Ảnh</label><br>
                                                 <input accept="image/*" type='file' id="inputFile" name="image" /><br>
                                                 <br>
@@ -97,7 +113,7 @@
                                                     @if ('image')
                                                 <p style="color:red">{{ $errors->first('image') }}</p>
                                                      @endif
-                                            </div>
+                                            </div> --}}
 
 
 

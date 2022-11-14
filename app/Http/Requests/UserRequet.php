@@ -25,7 +25,7 @@ class UserRequet extends FormRequest
     {
         return [
                 'name' => 'required|min:3|max:255',
-                'email' => 'required|unique:users|max:255',
+                'email' => 'required|unique:users|email|max:255',
                 'password' => 'required|min:6|max:50',
         ];
 
@@ -36,8 +36,9 @@ class UserRequet extends FormRequest
             'name.min' => ':attribute bắt buộc :min kí tự trở lên',
             'email.required' => ':attribute bắt buộc nhập',
             'email.unique' => ':attribute đã tồn tại',
+            'email.email' => ':attribute phải là một địa chỉ mail hợp lệ',
             'password.required' => ':attribute bắt buộc nhập',
-            'password.required' => ':attribute bắt buộc :min kí tự trở lên',
+            'password.min' => ':attribute bắt buộc :min kí tự trở lên',
         ];
     }
 }

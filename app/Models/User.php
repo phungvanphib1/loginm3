@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Traits\HasPermissions;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasPermissions;
 
     /**
      * The attributes that are mass assignable.
@@ -41,4 +42,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function adminPermission(){
+        $roles = [ 'index','create','update','delete' ];
+        return collect($roles);
+    }
+
+    public function staffPermission(){
+        $roles = [ 'index','create'];
+        return collect($roles);
+    }
+
+
+    public function hasPermission( $permission ){
+        if( $this->name == 'admin' ){
+            $roles = $this->adminPermission();
+        }
+        if( $this->name == 'staff' ){
+            $roles = $this->staffPermission();
+        }
+        if( $roles->contains($permission) ){
+            return true;
+        }
+        return false;
+    }
+
 }

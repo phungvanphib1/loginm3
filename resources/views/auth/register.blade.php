@@ -26,14 +26,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<h2>Đăng ký tài kho</h2>
 		<form action="{{ Route('handdle-register') }}" method="post">
             @csrf
-			<input type="text" class="ggg" name="name" placeholder="NAME" required="">
-
-			<input type="email" class="ggg" name="email" placeholder="E-MAIL" required="">
-
-			<input type="password" class="ggg" name="confirm_password" placeholder="MẬT KHẨU" required="">
-
-			<input type="password" class="ggg" name="password" placeholder="NHẬP LẠI MẬT KHẨU" required="">
-
+			<input type="text" class="ggg" value="{{ old('name') }}" name="name" placeholder="NAME" >
+            @error('name')
+                <div class="text text-danger">{{ $message }}</div>
+            @enderror
+			<input type="text" class="ggg" value="{{ old('email') }}" name="email" placeholder="E-MAIL" >
+            @error('email')
+            <div class="text text-danger">{{ $message }}</div>
+            @enderror
+			<input type="password" class="ggg"  name="confirm_password" placeholder="MẬT KHẨU" >
+            @error('password')
+            <div class="text text-danger">{{ $message }}</div>
+            @enderror
+			<input type="password" class="ggg" name="password" placeholder="NHẬP LẠI MẬT KHẨU" >
+            @error('password')
+            <div class="text text-danger">{{ $message }}</div>
+            @enderror
 			<h4><input type="checkbox" />Tôi đồng ý với Điều khoản dịch vụ và Chính sách quyền riêng tư</h4>
 
 				<div class="clearfix"></div>

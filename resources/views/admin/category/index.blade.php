@@ -6,7 +6,9 @@
                 <header class="page-title-bar">
                     <h1 class="page-title">Thể Loại</h1>
                     <nav aria-label="breadcrumb">
-                        <a href="{{ route('category.create') }}" class="w3-button w3-red">Thêm Thể Loại</a>
+                        @if (Auth::user()->hasPermission('Category_create'))
+                                <a href="{{ route('category.create') }}" class="w3-button w3-red">Thêm Thể Loại</a>
+                        @endif
                     </nav>
                 </header>
                 <hr>
@@ -40,26 +42,30 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $category->id }}</td>
                                     <td>{{ $category->name }}</td>
-                                    <td>{{  count($category->products) }}</td>
+                                    <td>{{ count($category->products) }}</td>
                                     <td>
                                         {{-- <a data-href="{{ route('category.destroy', $category->id) }}" id="{{ $category->id }}" class="w3-button w3-red sm deleteIcon">Xóa</a> --}}
 
-                                        <form action="{{route('category.softdeletes', $category->id)}}" method="POST">
-                                            <a href="{{ route('category.edit', $category->id) }}" class="w3-button w3-blue">Sửa</a>
+                                        <form action="{{ route('category.softdeletes', $category->id) }}" method="POST">
+                                            <a href="{{ route('category.edit', $category->id) }}"
+                                                class="w3-button w3-blue">Sửa</a>
                                             @csrf
                                             @method('PUT')
-                                            <button type="submit" class="w3-button w3-red" onclick="return confirm('Chuyên vào thùng rác')"  >Xóa</button>
+                                            <button type="submit" class="w3-button w3-red"
+                                                onclick="return confirm('Chuyên vào thùng rác')">Xóa</button>
                                             @if (Session::has('success'))
-                                            <p class="text-success">
-                                            <div class="alert alert-success"> <i class="fa fa-check" aria-hidden="true"></i>
-                                                {{ Session::get('success') }}</div>
-                                            </p>
+                                                <p class="text-success">
+                                                <div class="alert alert-success"> <i class="fa fa-check"
+                                                        aria-hidden="true"></i>
+                                                    {{ Session::get('success') }}</div>
+                                                </p>
                                             @endif
                                             @if (Session::has('error'))
-                                            <p class="text-danger">
-                                            <div class="alert alert-danger"> <i class="bi bi-x-circle"aria-hidden="true"></i>
-                                                {{ Session::get('error') }}</div>
-                                            </p>
+                                                <p class="text-danger">
+                                                <div class="alert alert-danger"> <i
+                                                        class="bi bi-x-circle"aria-hidden="true"></i>
+                                                    {{ Session::get('error') }}</div>
+                                                </p>
                                             @endif
                                         </form>
 
@@ -69,8 +75,8 @@
                         </tbody>
                     </table>
                     {{ $categories->appends(request()->query()) }}
+                </div>
             </div>
-        </div>
     </section>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.bundle.min.js'></script>

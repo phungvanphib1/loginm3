@@ -57,9 +57,30 @@ class ProductController extends Controller
         $product->amount = $request->amount;
         $product->description = $request->description;
         $product->category_id = $request->category_id;
-        $product->image = 'null';
+        $file = $request->image;
+        // $get_image = $request->file('image');
+        // if($get_image){
+        //     $get_name_image=$get_image->getClientOriginalName();
+        //     $get_name= current(explode('.',$get_name_image));
+        //     $new_image= $get_name.rand(0,99).'.'.$get_image->getClientOriginalExtension();
+        //     $get_image->move('upload',$new_image);
+        //     $product->image = $new_image;
+        //     $product->save();
+        //     $notification = [
+        //         'message' => 'Chỉnh Sửa Thành Công!',
+        //         'alert-type' => 'success'
+        //     ];
+        //     return redirect()->route('product.index')->with($notification);
+        // }
+
+        if ($request->hasFile('image')) {
+            $fileExtension = $file->getClientOriginalName();
+            //Lưu file vào thư mục storage/app/public/image với tên mới
+            $request->file('image')->storeAs('public/images', $fileExtension);
+            // Gán trường image của đối tượng task với tên mới
+            $product->image = $fileExtension;
+        }
         // $product->image = $request->image;
-        // dd($product);
         $product->save();
         $notification = [
             'message' => 'Thêm Thành Công!',
@@ -118,7 +139,18 @@ class ProductController extends Controller
         $product->amount = $request->amount;
         $product->description = $request->description;
         $product->category_id = $request->category_id;
-        $product->image = 'null';
+        $get_image = $request->file('image');
+        if($get_image){
+            $new_image=rand(0,99).'.'.$get_image->getClientOriginalExtension();
+            $get_image->move('public/assets/upload',$new_image);
+            $product->image = $new_image;
+            $product->save();
+            $notification = [
+                'message' => 'Chỉnh Sửa Thành Công!',
+                'alert-type' => 'success'
+            ];
+            return redirect()->route('product.index')->with($notification);
+        }
         $product->save();
         $notification = [
             'message' => 'Chỉnh Sửa Thành Công!',
