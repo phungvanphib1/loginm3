@@ -27,7 +27,7 @@
                     </a>
                     <ul class="sub">
 						<li><a class="fa fa-diamond" href="#"> Admin</a></li>
-						<li><a class='fa fa-street-view' href="#"> Nhân Sự</a></li>
+						<li><a class='fa fa-street-view' href="{{route('user.index')}}"> Nhân Sự</a></li>
                         {{-- <li><a href="#">Grids</a></li> --}}
                     </ul>
                 </li>

@@ -14,7 +14,7 @@
                         </header>
 
                         <div class="page-section">
-                            <form action="{{ route('product.update', $product->id) }}" method="POST">
+                            <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
                                 <div class="card">
@@ -66,8 +66,7 @@
 
                                             <div class="form-group">
                                                 <label for="tf1">Mô tả<abbr name="Trường bắt buộc">*</abbr></label>
-                                                <textarea name="description" class="form-control" value="{{ $product->description }}" id="ckeditor1" rows="4"
-                                                    style="resize: none"></textarea>
+                                                <textarea name="description" class="form-control" id="ckeditor1" rows="4" style="resize: none">{!! $product->description !!}</textarea>
                                                 <small id="" class="form-text text-muted"></small>
                                                 @error('description')
                                                     <div class="text text-danger">{{ $message }}</div>
@@ -79,24 +78,28 @@
                                                 <label class="control-label" for="flatpickr01">Danh mục<abbr
                                                         name="Trường bắt buộc">*</abbr></label>
                                                 <select name="category_id" id="" class="form-control">
-                                                    <option value="">--Vui lòng chọn--</option>
+                                                    {{-- <option value="">--Vui lòng chọn--</option> --}}
                                                     @foreach ($categories as $category)
-                                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                        <option
+                                                            <?= $category->id == $product->category_id ? 'selected' : '' ?>
+                                                            value="{{ $category->id }}">
+                                                            {{ $category->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 @if ('category_id')
-                                                <p style="color:red">{{ $errors->first('category_id') }}</p>
-                                            @endif
+                                                    <p style="color:red">{{ $errors->first('category_id') }}</p>
+                                                @endif
                                             </div>
                                             <div class="form-group col-lg-6">
                                                 <label class="control-label" for="flatpickr01">Hìnhh Ảnh</label><br>
                                                 <input accept="image/*" type='file' id="inputFile" name="image" /><br>
                                                 <br>
-                                                <img type="hidden" width="90px" height="90px" id="blah"
-                                                    src="#" alt="" />
-                                                    @if ('image')
-                                                <p style="color:red">{{ $errors->first('image') }}</p>
-                                                     @endif
+                                                <img type="hidden" width="90px" height="90px" id="blah1"
+                                                    src="{{ asset('storage/images/' . $product->image) ?? asset('storage/images/' . $request->image) }}"
+                                                    alt="" />
+                                                @if ('image')
+                                                    <p style="color:red">{{ $errors->first('image') }}</p>
+                                                @endif
                                             </div>
 
 
@@ -128,4 +131,3 @@
         });
     </script>
 @endsection
-

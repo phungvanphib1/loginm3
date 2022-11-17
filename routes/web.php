@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 Route::get('/login', [UserController::class, 'viewLogin'])->name('login');
 Route::post('handdle-login', [UserController::class, 'login'])->name('handdle-login');
 
@@ -51,6 +53,16 @@ Route::middleware(['auth','revalidate'])->group(function () {
         Route::put('/update/{id}', [ProductController::class, 'update'])->name('product.update');
         Route::delete('destroy/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
     });
+    Route::group(['prefix'=>'users'],function(){
+        Route::get('/',[UserController::class,'index'])->name('user.index');
+        Route::get('/create',[UserController::class,'create'])->name('user.create');
+        Route::post('/store',[UserController::class,'store'])->name('user.store');
+        Route::get('/show/{id}',[UserController::class,'show'])->name('user.show');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+        Route::put('/update/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::delete('destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
 
+
+    });
 });

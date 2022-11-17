@@ -5,18 +5,15 @@
             <div class="market-updates">
                 <div class="container">
                     <div class="page-inner">
-
                         <header class="page-title-bar">
                             <nav aria-label="breadcrumb">
                                 <a href="{{ route('product.index') }}" class="w3-button w3-red">Quay Lại</a>
                             </nav>
                             <h1 class="page-title">Thêm Sản phẩm</h1>
                         </header>
-
                         <div class="page-section">
                             <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                {{-- @method('PUT') --}}
                                 <div class="card">
                                     <div class="card-body">
                                         <legend>Thông tin cơ bản</legend>
@@ -32,9 +29,6 @@
                                                         @error('name')
                                                             <div class="text text-danger">{{ $message }}</div>
                                                         @enderror
-                                                        {{-- @if ($errors->any())
-                                                            <p style="color:red">{{ $errors->first('name') }}</p>
-                                                        @endif --}}
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
@@ -61,9 +55,7 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-
                                             </div>
-
                                             <div class="form-group">
                                                 <label for="tf1">Mô tả<abbr name="Trường bắt buộc">*</abbr></label>
                                                 <textarea name="description" class="form-control" value="{{ old('description') }}" id="ckeditor1" rows="4"
@@ -73,8 +65,6 @@
                                                     <div class="text text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
-
-
                                             <div class="form-group col-lg-6">
                                                 <label class="control-label" for="flatpickr01">Danh mục<abbr
                                                         name="Trường bắt buộc">*</abbr></label>
@@ -91,12 +81,6 @@
                                             <div class="form-group has-warning">
                                                 <label class="col-lg-3 control-label">image</label>
                                                 <div class="col-lg-6">
-                                                    {{-- <input accept="images/*" type='file' id="inputFile" name="image" /><br>
-                                                    @error('image')
-                                                        <div class="text text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                    <br>
-                                                    <img type="hidden" width="90px" height="90px" id="blah" src="" alt="" /> --}}
                                                     <input accept="image/*" type='file' id="inputFile"
                                                         name="image" /><br>
                                                     <br>
@@ -104,19 +88,6 @@
                                                         src="#" alt="" />
                                                 </div>
                                             </div>
-                                            {{-- <div class="form-group col-lg-6">
-                                                <label class="control-label" for="flatpickr01">Hìnhh Ảnh</label><br>
-                                                <input accept="image/*" type='file' id="inputFile" name="image" /><br>
-                                                <br>
-                                                <img type="hidden" width="90px" height="90px" id="blah"
-                                                    src="#" alt="" />
-                                                    @if ('image')
-                                                <p style="color:red">{{ $errors->first('image') }}</p>
-                                                     @endif
-                                            </div> --}}
-
-
-
                                         </div>
                                         <div class="form-actions">
                                             <button class="w3-button w3-blue" type="submit">Thêm Sản Phẩm</button>

@@ -2335,25 +2335,19 @@ ul.inbox-pagination li {
     bottom: 12%;
 }
 .captn {
-    background:rgba(139, 92, 126, 0.73);
     padding: 2em;
     position: absolute;
-    border: solid 1px #FFF;
-    left: 6%;
     bottom: -100%;
-    text-align: center;
-    width: 340px;
-    height: 200px;
     -webkit-transition: .5s all;
     transition: .5s all;
     -moz-transition: .5s all;
 }
 .captn h4 {
+    background-color:rgba(220, 55, 55, 0.897) ;
 	font-size: 1.2em;
-    color: #fff;
+    color: rgb(240, 240, 240);
     margin: 2.5em 0 0 0;
     text-transform: uppercase;
-    font-weight: 600;
     letter-spacing: 2px;
 }
 .captn p {
