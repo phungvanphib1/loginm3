@@ -117,18 +117,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
-        $notification = [
-            'message' => 'Xóa Thành Công!',
-            'alert-type' => 'success'
-        ];
-        try {
-            $category->delete();
-            return response()->json(200);
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            return redirect()->route('category.index');
-        }
+        $category=Category::onlyTrashed()->findOrFail($id);
+        $category->forceDelete();
     }
 
 
@@ -147,33 +137,21 @@ class CategoryController extends Controller
     }
 
     public  function trash(){
-        $categories = Category::query(true);
-        $categories->orderBy('id', 'DESC');
-        $categories = $categories->where('deleted_at', '!=', null)->paginate(4);
+        $categories = Category::query(true)->search()->onlyTrashed()->paginate(5);
         $param = ['categories'    => $categories];
         return view('admin.category.trash', $param);
     }
 
     public function restoredelete($id){
-        date_default_timezone_set("Asia/Ho_Chi_Minh");
-        $categories = Category::findOrFail($id);
-        $categories->deleted_at = null;
-        $notification = [
-            'message' => 'Khôi phục thành công!',
-            'alert-type' => 'success'
-        ];
-        $notification = [
-            'message' => 'Khôi phục thành công!',
-            'alert-type' => 'success'
-        ];
-        try {
-            $categories->save();
-            // Session::flash('success', 'Khôi phục ' . $categories->title . ' thành công');
-            return redirect()->route('category.trash')->with($notification);
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
 
-            return redirect()->route('category.trash')->with('error', 'xóa không thành công');
-        }
+        $categories=Category::withTrashed()->where('id', $id);
+        $categories->restore();
+        $notification = [
+                'message' => 'Khôi phục thành công!',
+                 'alert-type' => 'success'
+            ];
+        return redirect()->route('category.trash')->with($notification);;
+
+
     }
 }

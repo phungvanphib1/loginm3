@@ -59,21 +59,6 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->category_id = $request->category_id;
         $file = $request->image;
-        // $get_image = $request->file('image');
-        // if($get_image){
-        //     $get_name_image=$get_image->getClientOriginalName();
-        //     $get_name= current(explode('.',$get_name_image));
-        //     $new_image= $get_name.rand(0,99).'.'.$get_image->getClientOriginalExtension();
-        //     $get_image->move('upload',$new_image);
-        //     $product->image = $new_image;
-        //     $product->save();
-        //     $notification = [
-        //         'message' => 'Chỉnh Sửa Thành Công!',
-        //         'alert-type' => 'success'
-        //     ];
-        //     return redirect()->route('product.index')->with($notification);
-        // }
-
         if ($request->hasFile('image')) {
             $fileExtension = $file->getClientOriginalName();
             //Lưu file vào thư mục storage/app/public/image với tên mới
@@ -165,7 +150,41 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::find($id);
-        $product->delete();
+        $category=Product::onlyTrashed()->findOrFail($id);
+        $category->forceDelete();
     }
+
+    public  function trash(){
+        $products = Product::query(true)->search()->onlyTrashed()->paginate(5);
+        $param = ['products'    => $products];
+        return view('admin.product.trash', $param);
+    }
+
+    public  function softdeletes($id){
+
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+        $product = Product::findOrFail($id);
+        $product->deleted_at = date("Y-m-d h:i:s");
+        $notification = [
+            'message' => 'Đã chuyển vào kho lưu!',
+            'alert-type' => 'success'
+        ];
+        $product->save();
+        return redirect()->route('product.index')->with($notification);
+
+    }
+
+    public function restoredelete($id){
+
+        $product=Product::withTrashed()->where('id', $id);
+        $product->restore();
+        $notification = [
+                'message' => 'Khôi phục thành công!',
+                 'alert-type' => 'success'
+            ];
+        return redirect()->route('product.trash')->with($notification);;
+
+
+    }
+
 }

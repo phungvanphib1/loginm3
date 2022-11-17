@@ -51,7 +51,7 @@
                     </a>
                     <ul class="sub">
                         <li><a  class="active" href="{{route('product.index')}}">Thêm Sản Phẩm</a></li>
-                        <li><a href="#">Kho Lưu Trử</a></li>
+                        <li><a href="{{route('product.trash')}}">Kho Lưu Trử</a></li>
                     </ul>
                 </li>
 

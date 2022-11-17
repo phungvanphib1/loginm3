@@ -3,8 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use App\Models\Group;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -22,7 +25,10 @@ class DatabaseSeeder extends Seeder
         $this->importRoles();
         $this->importGroupRole();
         $this->importUser();
- 
+
+        $this->importCategory();
+        $this->importProduct();
+
 
     }
     public function importRoles()
@@ -79,6 +85,7 @@ class DatabaseSeeder extends Seeder
         $user->phone = '0935779035';
         $user->gender = 'Nam';
         $user->group_id = '2';
+        $user->image = 'logo-search-grid-1x.png';
         $user->save();
 
         $user = new User();
@@ -91,6 +98,7 @@ class DatabaseSeeder extends Seeder
         $user->phone = '0777333274';
         $user->gender = 'Nam';
         $user->group_id = '3';
+        $user->image = 'logo-search-grid-1x.png';
         $user->save();
 
         $user = new User();
@@ -102,7 +110,7 @@ class DatabaseSeeder extends Seeder
         $user->address = 'Quảng Trị';
         $user->group_id = '3';
         $user->gender = 'Nam';
-        $user->image = 'hai.jpg';
+        $user->image = 'logo-search-grid-1x.png';
         $user->save();
 
         $user = new User();
@@ -114,7 +122,7 @@ class DatabaseSeeder extends Seeder
         $user->address = 'Quảng Trị';
         $user->group_id = '4';
         $user->gender = 'Nam';
-        $user->image = 'duong.jpg';
+        $user->image = 'logo-search-grid-1x.png';
         $user->save();
 
         $user = new User();
@@ -126,7 +134,102 @@ class DatabaseSeeder extends Seeder
         $user->address = 'Quảng Trị';
         $user->group_id = '1';
         $user->gender = 'Nam';
-        $user->image = 'vinh.jpg';
+        $user->image = 'logo-search-grid-1x.png';
         $user->save();
+    }
+
+    public function importCategory()
+    {
+        $category = new Category();
+        $category->name = 'Áo KhoácNow';
+        $category->save();
+
+        $category = new Category();
+        $category->name = 'Áo phongNow';
+        $category->save();
+
+        $category = new Category();
+        $category->name = 'Áo PoloNow';
+        $category->save();
+
+        $category = new Category();
+        $category->name = 'Quần from rộng';
+        $category->save();
+
+        $category = new Category();
+        $category->name = 'Quần Đùi';
+        $category->save();
+
+        $category = new Category();
+        $category->name = 'Nón lưỡi trai';
+        $category->save();
+
+
+    }
+    public function importProduct()
+    {
+        $product = new Product();
+        $product->name = 'DOUBLE NECK POLO SHIRTS - 1';
+        $product->price = 450000;
+        $product->	amount = 100;
+        $product->description = 'Quảng Trị';
+        $product->category_id  = 2;
+        $product->image = 'ao.jpg';
+        $product->save();
+
+        $product = new Product();
+        $product->name = 'DOUBLE NECK POLO SHIRTS - 2';
+        $product->price = 450000;
+        $product->	amount = 100;
+        $product->description = 'Quảng Trị';
+        $product->category_id  = 2;
+        $product->image = 'ao.jpg';
+        $product->save();
+
+        $product = new Product();
+        $product->name = 'DOUBLE NECK POLO SHIRTS - 3';
+        $product->price = 450000;
+        $product->	amount = 100;
+        $product->description = 'Quảng Trị';
+        $product->category_id  = 5;
+        $product->image = 'ao.jpg';
+        $product->save();
+
+        $product = new Product();
+        $product->name = 'DOUBLE NECK POLO SHIRTS - 4';
+        $product->price = 450000;
+        $product->	amount = 100;
+        $product->description = 'Quảng Trị';
+        $product->category_id  = 4;
+        $product->image = 'ao.jpg';
+        $product->save();
+
+        $product = new Product();
+        $product->name = 'DOUBLE NECK POLO SHIRTS - 5';
+        $product->price = 450000;
+        $product->	amount = 100;
+        $product->description = 'Quảng Trị';
+        $product->category_id  = 3;
+        $product->image = 'ao.jpg';
+        $product->save();
+
+        $product = new Product();
+        $product->name = 'DOUBLE NECK POLO SHIRTS - 6';
+        $product->price = 450000;
+        $product->	amount = 100;
+        $product->description = 'Quảng Trị';
+        $product->category_id  = 2;
+        $product->image = 'ao.jpg';
+        $product->save();
+
+        $product = new Product();
+        $product->name = 'DOUBLE NECK POLO SHIRTS - 7';
+        $product->price = 450000;
+        $product->	amount = 100;
+        $product->description = 'Quảng Trị';
+        $product->category_id  = 1;
+        $product->image = 'ao.jpg';
+        $product->save();
+
     }
 }

@@ -52,6 +52,11 @@ Route::middleware(['auth','revalidate'])->group(function () {
         Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
         Route::put('/update/{id}', [ProductController::class, 'update'])->name('product.update');
         Route::delete('destroy/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
+
+        Route::put('/softdeletes/{id}', [ProductController::class, 'softdeletes'])->name('product.softdeletes');
+        Route::get('/trash', [ProductController::class, 'trash'])->name('product.trash');
+        Route::put('/restoredelete/{id}', [ProductController::class, 'restoredelete'])->name('product.restoredelete');
+
     });
     Route::group(['prefix'=>'users'],function(){
         Route::get('/',[UserController::class,'index'])->name('user.index');
@@ -61,6 +66,10 @@ Route::middleware(['auth','revalidate'])->group(function () {
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('user.update');
         Route::delete('destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
+        Route::get('/editpass/{id}', [UserController::class, 'editpass'])->name('user.editpass');
+        Route::put('/updatepass/{id}', [UserController::class, 'updatepass'])->name('user.updatepass');
+
 
 
 

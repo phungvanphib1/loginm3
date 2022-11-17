@@ -2,7 +2,7 @@
 @section('content')
     <section class="wrapper">
         <!-- //market-->
-        
+
         <div class="market-updates">
             <div class="col-md-3 market-update-gd">
                 <div class="market-update-block clr-block-2">
@@ -306,4 +306,6 @@
        <source  src="{{ asset('assets/video/demoNow.mp4') }}">
     </video>
     {{-- <video tabindex="-1" class="video-stream html5-main-video" webkit-playsinline="" playsinline="" controlslist="nodownload" src="{{ 'blog:https://www.youtube.com/watch?v=4hn3_NuBTuk' }}" width="100%" height="500"></video> --}}
+
+    
 @endsection

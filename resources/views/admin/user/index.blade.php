@@ -17,9 +17,19 @@ border-radius:50%;
                         <h1 class="page-title">Sản phẩm</h1>
                         <a href="{{ route('user.create') }}" class="w3-button w3-red">Đăng ký tài khoản user</a>
                     </header>
+
+                    {{-- <button data-swal-toast-template="#my-template">
+                        Trigger toast
+                      </button>
+
+                      <template id='my-template'>
+                        <swal-title>Hey!</swal-title>
+                      </template> --}}
+
+
                     <hr>
                     <div class="panel-heading">
-                        products Management
+                        Nhân sự
                     </div>
                     <div>
                         <table class="table" ui-jq="footable"
@@ -107,6 +117,15 @@ border-radius:50%;
                     }
                 })
             });
+        </script>
+
+        <script>
+            Swal.bindClickHandler()
+            Swal.mixin({
+            toast: true,
+            icon: 'error',
+            text: "Ngu!",
+            }).bindClickHandler('data-swal-toast-template')
         </script>
 </section>
 @endsection

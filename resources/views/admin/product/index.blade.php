@@ -39,26 +39,42 @@
                             @foreach ($products as $key => $product)
                                 <tr data-expanded="true" class="item-{{ $product->id }}">
                                     <td>{{  ++$key }}</td>
-                                    {{-- <td>{{ $product->id }}</td> --}}
                                     <td><a href="{{ route('product.show', $product->id) }}">{{ $product->name }}</a></td>
                                     <td>{{ $product->categories->name }}</td>
                                     <td>{{ $product->amount }}</td>
-                                    {{-- <td> <img src="public/upload/{{ $product->image }}" height="100" width="100"></td> --}}
-                                   <td><img src="{{ asset('storage/images/' . $product->image) }}" alt="" width='120px' height="100px"></td>
+                                   <td><img src="{{ asset('storage/images/' . $product->image) }}" alt="" width='100px' height="120px"></td>
                                     <td>
-                                        <a href="{{ route('product.edit', $product->id) }}"
-                                            class="w3-button w3-blue">Sửa</a>
 
-                                        <a data-href="{{ route('product.destroy', $product->id) }}"
-                                            id="{{ $product->id }}" class="w3-button w3-red sm deleteIcon">Xóa</i></a>
-                                        {{-- <a data-href="{{ route('category.destroy', $category->id) }}"
-                                             id="{{ $category->id }}" class="w3-button w3-red sm deleteIcon">Xóa</a> --}}
+                                            <form action="{{ route('product.softdeletes', $product->id) }}" method="POST">
+                                                <a href="{{ route('product.edit', $product->id) }}"
+                                                    class="w3-button w3-blue">Sửa</a>
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="w3-button w3-red"
+                                                    onclick="return confirm('Chuyên vào thùng rác')">Xóa</button>
+                                                @if (Session::has('success'))
+                                                    <p class="text-success">
+                                                    <div class="alert alert-success"> <i class="fa fa-check"
+                                                            aria-hidden="true"></i>
+                                                        {{ Session::get('success') }}</div>
+                                                    </p>
+                                                @endif
+                                                @if (Session::has('error'))
+                                                    <p class="text-danger">
+                                                    <div class="alert alert-danger"> <i
+                                                            class="bi bi-x-circle"aria-hidden="true"></i>
+                                                        {{ Session::get('error') }}</div>
+                                                    </p>
+                                                @endif
+                                            </form>
+                                        {{-- <a data-href="{{ route('product.destroy', $product->id) }}"
+                                            id="{{ $product->id }}" class="w3-button w3-red sm deleteIcon">Xóa</i></a> --}}
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                   {{ $products->appends(request()->query()) }}
+                    {{ $products->appends(request()->query()) }}
                 </div>
             </div>
         </div>

@@ -6,7 +6,8 @@
             <div  class="fa fa-bars" aria-hidden="true" ></div>
         </div>
         <a href="{{route('dashboard.home')}}" class="logo">
-            ADMiN
+            {{-- {{ auth()->group->name }} --}}
+            Admin
         </a>
     </div>
     <!--logo end-->
@@ -200,18 +201,22 @@
             <!-- user login dropdown start-->
             <li class="dropdown">
                 <br>
+
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                     <img alt="" src="images/2.png">
                     <b><span class="username">{{ auth()->user()->name }}</span></b>
                     <b class="caret"></b>
+
                 </a>
                 <ul class="dropdown-menu extended logout">
-                    <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                    <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+            <p>{{auth()->user()->group->name}}</p>
+            <hr>
+                    <li><a href="{{ route('user.show', auth()->user()->id) }}"><i class=" fa fa-suitcase"></i>Trang cá nhân</a></li>
+                    <li><a href="{{ route('user.edit', auth()->user()->id) }}"><i class="fa fa-cog"></i>Chỉnh sửa</a></li>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                     <li><a  href="{{ route('logout') }}"onclick="event.preventDefault();
-                    this.closest('form').submit();"><i class="fa fa-key"></i> Log Out</a></li>
+                    this.closest('form').submit();"><i class="fa fa-key"></i> Đăng xuất</a></li>
                     </form>
                 </ul>
             </li>

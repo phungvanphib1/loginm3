@@ -142,7 +142,7 @@
                                         </div>
                                         <div class="form-actions">
                                             <br><br><br><br>
-                                            <button class="w3-button w3-blue" type="submit">Đăng ký</button>
+                                            <button class="w3-button w3-blue" type="submit">Lưu thay đổi</button>
                                             <a class="w3-button w3-red" href="{{ route('user.index') }}">Hủy</a>
                                         </div>
                                     </div>

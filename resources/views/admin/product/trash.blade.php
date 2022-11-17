@@ -6,7 +6,7 @@
                 <header class="page-title-bar">
                     <h1 class="page-title">Sản Phẩm</h1>
                     <nav aria-label="breadcrumb">
-                        <a href="{{ route('category.index') }}" class="w3-button w3-red">Trang chủ</a>
+                        <a href="{{ route('product.index') }}" class="w3-button w3-red">Trang chủ</a>
                     </nav>
                 </header>
                 <hr>
@@ -27,35 +27,38 @@
     }}'>
                         <thead>
                             <tr>
-                                <th>STT</th>
-                                <th>Tên</th>
-                                <th>Số Lượng Sản Phẩm</th>
-                                <th>Hiển thị</th>
+                                <th data-breakpoints="xs">Stt</th>
+                                <th data-breakpoints="xs">id</th>
+                                <th>Tên Sản Phẩm</th>
+                                <th>Thể loại</th>
+                                <th>Số Lượng</th>
+                                <th>Hiển Thị</th>
                                 <th data-breakpoints="xs">Tùy Chỉnh</th>
                             </tr>
                         </thead>
                         <tbody id="myTable">
-                            @foreach ($categories as $key => $category)
-                                <tr data-expanded="true" class="item-{{ $category->id }}">
+                            @foreach ($products as $key => $product)
+                                <tr data-expanded="true" class="item-{{ $product->id }}">
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $category->id }}</td>
-                                    <td>{{ $category->name }}</td>
-                                    <td>{{ count($category->products) }}</td>
-                                    <td></td>
+                                    <td>{{ $product->id }}</td>
+                                    <td>{{ $product->name }}</td>
+                                    <td> {{ $product->categories->name}} </td>
+                                    <td> {{ $product->amount}} </td>
+                                    <td><img src="{{ asset('storage/images/' . $product->image) }}" alt="" width='100px' height="120px"></td>
                                     <td>
-                                        <form action="{{ route('category.restoredelete', $category->id) }}" method="POST">
+                                        <form action="{{ route('product.restoredelete', $product->id) }}" method="POST">
                                             @csrf
                                             @method('put')
                                             <button type="submit" class="w3-button w3-blue">Khôi Phục</button>
-                                            <a data-href="{{ route('category.destroy', $category->id) }}"
-                                                id="{{ $category->id }}" class="w3-button w3-red sm deleteIcon">Xóa</a>
+                                            <a data-href="{{ route('product.destroy', $product->id) }}"
+                                                id="{{ $product->id }}" class="w3-button w3-red sm deleteIcon">Xóa</a>
                                         </form>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    {{ $categories->appends(request()->query()) }}
+                    {{ $products->appends(request()->query()) }}
                 </div>
             </div>
     </section>

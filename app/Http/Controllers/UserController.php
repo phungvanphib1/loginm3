@@ -8,6 +8,7 @@ use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
@@ -39,7 +40,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequet $request)
+    public function store(Request $request)
     {
 
         $user = new User();
@@ -59,13 +60,6 @@ class UserController extends Controller
             // Gán trường image của đối tượng task với tên mới
             $user->image = $fileExtension;
         }
-        // $product->image = $request->image;
-        // try {
-        //     $user->save();
-        //     return redirect()->route('login');
-        // } catch (\Exception $e) {
-        //     Log::error("message:" . $e->getMessage());
-        // }
         $user->save();
         $notification = [
             'message' => 'Đăng ký thành công!',
@@ -125,6 +119,80 @@ class UserController extends Controller
         return redirect()->route('user.index')->with($notification);
     }
 
+    // hiển thị form đổi mật khẩu
+    public function editpass($id){
+        // $this->authorize('admin_update', User::class);
+        $user = User::find($id);
+        $param =[
+            'user'=>$user,
+        ];
+        return view('admin.user.editpass', $param);
+    }
+
+    public function adminUpdatePass(UserRequet $request, $id){
+        $user = User::find($id);
+        if($request->renewpassword==$request->newpassword)
+        {
+            if ((Hash::check($request->password, $user->password))) {
+                $item = User::find($id);
+                $item->password= bcrypt($request->newpassword);
+                $item->save();
+                $notification = [
+                    'message' => 'Đổi mật khẩu thành công!',
+                    'alert-type' => 'success'
+                ];
+                return redirect()->route('user.index')->with($notification);
+            }else{
+                // dd($request);
+                $notification = [
+                    'saipass' => 'Mật khẩu hiện tại không đúng!',
+                    'alert-type' => 'error'
+                ];
+                return redirect()->route('user.index')->with($notification);
+            }
+        }else{
+            $notification = [
+                'sainhap' => 'Bạn nhập mật khẩu không trùng khớp!',
+                'alert-type' => 'error'
+            ];
+            return redirect()->route('user.index')->with($notification);
+        }
+    }
+
+    public function updatepass(UserRequet $request)
+    {
+        // dd($request);
+
+
+        if($request->renewpassword==$request->newpassword)
+        {
+            if ((Hash::check($request->password, Auth::user()->password))) {
+                $item=User::find(Auth()->user()->id);
+                $item->password= bcrypt($request->newpassword);
+                $item->save();
+                $notification = [
+                    'message' => 'Đổi mật khẩu thành công!',
+                    'alert-type' => 'success'
+                ];
+                return redirect()->route('user.index')->with($notification);
+            }else{
+                // dd($request);
+                $notification = [
+                    'saipass' => '!',
+
+                ];
+                return back()->with($notification);
+            }
+        }else{
+            $notification = [
+                'sainhap' => '!',
+            ];
+            return back()->with($notification);
+        }
+
+    }
+
+
     /**
      * Remove the specified resource from storage.
      *
@@ -149,6 +217,7 @@ class UserController extends Controller
     //xử lí đăng nhập
     public function login(Request $request)
     {
+
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -157,14 +226,16 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             // dd($request->all());
 
+
+
             $request->session()->regenerate();
 
             return redirect()->route('dashboard.home');
         }
-        $error = [
+        $notification = [
             'message' => 'error',
         ];
-        return back()->with($error);
+        return back()->with($notification);
         // ->withErrors([
         //     'email' => 'The provided credentials do not match our records.',
         // ])->onlyInput('email');
@@ -244,5 +315,7 @@ class UserController extends Controller
         return response()->json($user , $status);
 
     }
+
+
 
 }
