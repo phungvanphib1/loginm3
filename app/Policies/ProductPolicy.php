@@ -91,4 +91,14 @@ class ProductPolicy
     {
         return $user->hasPermission('Product_forceDelete');
     }
+    /**
+     * Determine whether the user can view any models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function viewtrash(User $user)
+    {
+       return $user->hasPermission('Product_viewtrash');
+    }
 }

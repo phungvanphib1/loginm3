@@ -4,6 +4,8 @@
         img#avtshow {
             border: 3px solid rgb(150, 0, 0);
             padding: 10px;
+            height: 250px;
+            width: 250px;
             border-radius: 50%;
 
         }
@@ -120,13 +122,22 @@
                                                 {{-- <button class="btn btn-info me-1 edit-btn" data-id="' + value.id + '">Edit</button> --}}
 
 
-
+                                                @if(Auth::user()->id == $user->id || Auth::user()->hasPermission('User_update'))
                                                 <a class="btn mini btn-default" href="{{ route('user.edit', $user->id) }}">
                                                     <i class="fa fa-cog"> Thông tin</i>
                                                 </a>
-                                                <a class="btn mini btn-default" href="{{ route('user.editpass', $user->id) }}">
+                                                @endif
+                                                @if(Auth::user()->id == $user->id)
+                                                <a class="btn mini btn-default" href="{{ route('user.editpass', Auth::user()->id) }}">
                                                     <i class="fa fa-cog"> Mật Khẩu </i>
                                                 </a>
+                                                @endif
+
+                                                @if (Auth::user()->hasPermission('User_adminUpdatePass'))
+                                                <a class="btn mini btn-default" href="{{ route('user.adminpass', $user->id) }}">
+                                                    <i class="fa fa-cog">Admin đổi mật khẩu Mật Khẩu </i>
+                                                </a>
+                                                @endif
                                             </div>
                                         </div>
                                     </section>

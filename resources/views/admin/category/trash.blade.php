@@ -47,9 +47,15 @@
                                         <form action="{{ route('category.restoredelete', $category->id) }}" method="POST">
                                             @csrf
                                             @method('put')
-                                            <button type="submit" class="w3-button w3-blue">Khôi Phục</button>
-                                            <a data-href="{{ route('category.destroy', $category->id) }}"
-                                                id="{{ $category->id }}" class="w3-button w3-red sm deleteIcon">Xóa</a>
+
+                                            @if (Auth::user()->hasPermission('Category_restore'))
+                                                <button type="submit" class="w3-button w3-blue">Khôi Phục</button>
+                                            @endif
+
+                                            @if (Auth::user()->hasPermission('Category_forceDelete'))
+                                                <a data-href="{{ route('category.destroy', $category->id) }}"
+                                                    id="{{ $category->id }}" class="w3-button w3-red sm deleteIcon">Xóa</a>
+                                            @endif
                                         </form>
                                     </td>
                                 </tr>
@@ -98,13 +104,11 @@
                         },
                     });
                     Swal.fire({
-                    icon: 'error',
-                    title: 'lỗi rồi...',
-                    text: 'Đã xảy ra lỗi!',
-                    // footer: '<a href="">Why do I have this issue?</a>'
+                        icon: 'error',
+                        title: 'lỗi rồi...',
+                        text: 'Đã xảy ra lỗi!',
                     })
                 }
-
             })
         });
     </script>

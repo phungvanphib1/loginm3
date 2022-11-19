@@ -97,8 +97,8 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function admin_update(User $user)
+    public function adminUpdatePass(User $user)
     {
-        return $user->hasPermission('admin_update');
+        return $user->hasPermission('User_adminUpdatePass');
     }
 }

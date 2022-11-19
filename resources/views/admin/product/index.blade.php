@@ -5,7 +5,9 @@
         <div class="panel-panel-default">
                 <header class="page-title-bar">
                     <h1 class="page-title">Sản phẩm</h1>
+                    @if (Auth::user()->hasPermission('Product_create'))
                     <a href="{{ route('product.create') }}" class="w3-button w3-red">Thêm Sản Phẩm</a>
+                    @endif
                 </header>
                 <hr>
                 <div class="panel-heading">
@@ -39,19 +41,28 @@
                             @foreach ($products as $key => $product)
                                 <tr data-expanded="true" class="item-{{ $product->id }}">
                                     <td>{{  ++$key }}</td>
-                                    <td><a href="{{ route('product.show', $product->id) }}">{{ $product->name }}</a></td>
-                                    <td>{{ $product->categories->name }}</td>
+                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->categories->name}}</td>
                                     <td>{{ $product->amount }}</td>
-                                   <td><img src="{{ asset('storage/images/' . $product->image) }}" alt="" width='100px' height="120px"></td>
-                                    <td>
+                                   <td>
+                                    <a href="{{ route('product.show', $product->id) }}">
 
+                                    <img src="{{ asset('storage/images/' . $product->image) }}" alt="" width='100px' height="120px"></a></td>
+                                    <td>
                                             <form action="{{ route('product.softdeletes', $product->id) }}" method="POST">
+                                                @if (Auth::user()->hasPermission('Product_view'))
+                                                <a class="w3-button w3-white" href="{{ route('product.show', $product->id) }}">Xem</a>
+                                                @endif
+                                                @if (Auth::user()->hasPermission('Product_update'))
                                                 <a href="{{ route('product.edit', $product->id) }}"
                                                     class="w3-button w3-blue">Sửa</a>
+                                                @endif
                                                 @csrf
                                                 @method('PUT')
+                                                @if (Auth::user()->hasPermission('Product_delete'))
                                                 <button type="submit" class="w3-button w3-red"
                                                     onclick="return confirm('Chuyên vào thùng rác')">Xóa</button>
+                                                @endif
                                                 @if (Session::has('success'))
                                                     <p class="text-success">
                                                     <div class="alert alert-success"> <i class="fa fa-check"

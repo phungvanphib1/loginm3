@@ -42,6 +42,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Category::class);
         $notification = array(
             'message' => 'Thêm danh mục thành công',
             'alert-type' => 'success'
@@ -86,6 +87,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update', Category::class);
         $category = Category::find($id);
         return view('admin.category.edit', compact('category'));
     }
@@ -117,6 +119,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('forceDelete', Category::class);
         $category=Category::onlyTrashed()->findOrFail($id);
         $category->forceDelete();
     }
@@ -124,6 +127,7 @@ class CategoryController extends Controller
 
     public  function softdeletes($id){
 
+        $this->authorize('delete', Category::class);
         date_default_timezone_set("Asia/Ho_Chi_Minh");
         $category = Category::findOrFail($id);
         $category->deleted_at = date("Y-m-d h:i:s");
@@ -137,13 +141,14 @@ class CategoryController extends Controller
     }
 
     public  function trash(){
+        $this->authorize('viewtrash', Category::class);
         $categories = Category::query(true)->search()->onlyTrashed()->paginate(5);
         $param = ['categories'    => $categories];
         return view('admin.category.trash', $param);
     }
 
     public function restoredelete($id){
-
+        $this->authorize('restore',Category::class);
         $categories=Category::withTrashed()->where('id', $id);
         $categories->restore();
         $notification = [

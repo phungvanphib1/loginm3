@@ -70,6 +70,18 @@ class CategoryPolicy
     }
 
     /**
+     * Determine whether the user can view any models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function viewtrash(User $user)
+    {
+        // return $user->hasPermission('index');
+       return $user->hasPermission('Category_viewtrash');
+    }
+
+    /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
@@ -78,7 +90,7 @@ class CategoryPolicy
      */
     public function restore(User $user)
     {
-        return true;
+        // return true;
        return $user->hasPermission('Category_restore');
     }
 
@@ -93,4 +105,6 @@ class CategoryPolicy
     {
         return $user->hasPermission('Category_forceDelete');
     }
+
+
 }

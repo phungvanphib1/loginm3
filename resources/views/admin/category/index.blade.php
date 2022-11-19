@@ -47,13 +47,18 @@
                                         {{-- <a data-href="{{ route('category.destroy', $category->id) }}" id="{{ $category->id }}" class="w3-button w3-red sm deleteIcon">Xóa</a> --}}
 
                                         <form action="{{ route('category.softdeletes', $category->id) }}" method="POST">
+                                            @if (Auth::user()->hasPermission('Category_update'))
                                             <a href="{{ route('category.edit', $category->id) }}"
                                                 class="w3-button w3-blue">Sửa</a>
+                                            @endif
                                             @csrf
                                             @method('PUT')
+
+                                            @if (Auth::user()->hasPermission('Category_delete'))
                                             <button type="submit" class="w3-button w3-red"
                                                 onclick="return confirm('Chuyên vào thùng rác')">Xóa</button>
-                                            @if (Session::has('success'))
+                                            @endif
+                                                @if (Session::has('success'))
                                                 <p class="text-success">
                                                 <div class="alert alert-success"> <i class="fa fa-check"
                                                         aria-hidden="true"></i>

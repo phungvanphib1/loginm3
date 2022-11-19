@@ -49,9 +49,13 @@
                                         <form action="{{ route('product.restoredelete', $product->id) }}" method="POST">
                                             @csrf
                                             @method('put')
-                                            <button type="submit" class="w3-button w3-blue">Khôi Phục</button>
-                                            <a data-href="{{ route('product.destroy', $product->id) }}"
-                                                id="{{ $product->id }}" class="w3-button w3-red sm deleteIcon">Xóa</a>
+                                            @if (Auth::user()->hasPermission('Product_restore'))
+                                                <button type="submit" class="w3-button w3-blue">Khôi Phục</button>
+                                            @endif
+                                            @if (Auth::user()->hasPermission('Product_forceDelete'))
+                                                <a data-href="{{ route('product.destroy', $product->id) }}"
+                                                    id="{{ $product->id }}" class="w3-button w3-red sm deleteIcon">Xóa</a>
+                                            @endif
                                         </form>
                                     </td>
                                 </tr>

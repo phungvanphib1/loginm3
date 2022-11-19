@@ -14,12 +14,23 @@ use Illuminate\Support\Facades\Log;
 class UserController extends Controller
 {
 
+
     public function index(){
+        $this->authorize('viewAny', User::class);
         $users = User::search()->paginate(4);
         $param = [
             'users' => $users,
         ];
         return view('admin.user.index', $param);
+    }
+
+    public function showAdmin(){
+
+        $admins = User::get();
+        $param = [
+            'admins' => $admins,
+        ];
+        return view('admin.user.admin', $param);
     }
     /**
      * Show the form for creating a new resource.
@@ -28,6 +39,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', User::class);
         $groups = Group::get();
         $param = [
             'groups' => $groups,
@@ -70,7 +82,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-
+        $this->authorize('view', User::class);
         $user = User::findOrFail($id);
         $param =[
             'user'=>$user,
@@ -83,6 +95,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('view', User::class);
         $user = User::find($id);
         $groups=Group::get();
         $param = [
@@ -94,6 +107,7 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $user = User::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
@@ -121,7 +135,7 @@ class UserController extends Controller
 
     // hiển thị form đổi mật khẩu
     public function editpass($id){
-        // $this->authorize('admin_update', User::class);
+        $this->authorize('view', User::class);
         $user = User::find($id);
         $param =[
             'user'=>$user,
@@ -129,41 +143,42 @@ class UserController extends Controller
         return view('admin.user.editpass', $param);
     }
 
-    public function adminUpdatePass(UserRequet $request, $id){
+     // hiển thị form đổi mật khẩu
+     public function adminpass($id){
+        $this->authorize('adminUpdatePass', User::class);
+        $user = User::find($id);
+        $param =[
+            'user'=>$user,
+        ];
+        return view('admin.user.adminpass', $param);
+    }
+
+    // chỉ có superAdmin mới có quyền đổi mật khẩu người kh
+    public function adminUpdatePass(Request $request, $id){
+        $this->authorize('adminUpdatePass', User::class);
         $user = User::find($id);
         if($request->renewpassword==$request->newpassword)
         {
-            if ((Hash::check($request->password, $user->password))) {
-                $item = User::find($id);
-                $item->password= bcrypt($request->newpassword);
-                $item->save();
-                $notification = [
-                    'message' => 'Đổi mật khẩu thành công!',
-                    'alert-type' => 'success'
-                ];
-                return redirect()->route('user.index')->with($notification);
-            }else{
-                // dd($request);
-                $notification = [
-                    'saipass' => 'Mật khẩu hiện tại không đúng!',
-                    'alert-type' => 'error'
-                ];
-                return redirect()->route('user.index')->with($notification);
-            }
+            $item = User::find($id);
+            $item->password= bcrypt($request->newpassword);
+            $item->save();
+            $notification = [
+                'message' => 'Đổi mật khẩu thành công!',
+                'alert-type' => 'success'
+            ];
+            return redirect()->route('user.index')->with($notification);
+
         }else{
             $notification = [
                 'sainhap' => 'Bạn nhập mật khẩu không trùng khớp!',
                 'alert-type' => 'error'
             ];
-            return redirect()->route('user.index')->with($notification);
+            return back()->with($notification);
         }
     }
 
     public function updatepass(UserRequet $request)
     {
-        // dd($request);
-
-
         if($request->renewpassword==$request->newpassword)
         {
             if ((Hash::check($request->password, Auth::user()->password))) {
@@ -201,8 +216,18 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('forceDelete', Product::class);
+        $notification = [
+            'sainhap' => '!',
+        ];
+
         $user = User::find($id);
-        $user->delete();
+        if($user->group->name!='Supper Admin'){
+            $user->delete();
+        }
+        else{
+            return dd(__METHOD__);
+        }
     }
     //Hiển Thị Đăng Nhập
     public function viewLogin()
@@ -217,7 +242,6 @@ class UserController extends Controller
     //xử lí đăng nhập
     public function login(Request $request)
     {
-
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -225,9 +249,6 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             // dd($request->all());
-
-
-
             $request->session()->regenerate();
 
             return redirect()->route('dashboard.home');
@@ -236,9 +257,7 @@ class UserController extends Controller
             'message' => 'error',
         ];
         return back()->with($notification);
-        // ->withErrors([
-        //     'email' => 'The provided credentials do not match our records.',
-        // ])->onlyInput('email');
+
     }
 
     //Hiển Thị Đăng Ký
@@ -271,51 +290,6 @@ class UserController extends Controller
 
         return redirect()->route('login');
     }
-
-
-    //api
-
-    protected $user;
-
-    public function __construct( User  $user )
-    {
-        // $customer = new Customer();
-        // or
-        $this->user = $user;
-    }
-    public function api_index(){
-        $user = $this->user->get();
-
-        return response()->json($user, 200);
-    }
-
-    public function api_show($id){
-        $user = $this->user->find($id);
-        $status = 200;
-        if(!$user){
-            $status = 404;
-        }
-        return response()->json($user , $status);
-    }
-
-    public function api_update(Request $request, $id){
-        $this->user->where('id',$id)->update([
-            'name'=> $request->	name,
-            'email '=> $request->email ,
-            'phone'=> $request->phone,
-            'gender'=> $request->gender,
-            'address'=> $request->address,
-            'birthday'=> $request->birthday
-        ]);
-        $user = $this->user->find($id);
-        $status = 200;
-        if(!$user){
-            $status = 404;
-        }
-        return response()->json($user , $status);
-
-    }
-
 
 
 }
