@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -73,6 +74,16 @@ class UserController extends Controller
             $user->image = $fileExtension;
         }
         $user->save();
+
+        $data = [
+            'name' => $request->name,
+            'pass' => $request->password,
+        ];
+        Mail::send('admin.mail.mail', compact('data'), function ($email) use($request) {
+            $email->subject('NowSaiGon');
+            $email->to($request->email, $request->name);
+        });
+
         $notification = [
             'message' => 'Đăng ký thành công!',
             'alert-type' => 'success'
@@ -274,6 +285,9 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
         try {
             $user->save();
+
+
+
             return redirect()->route('login');
         } catch (\Exception $e) {
             Log::error("message:" . $e->getMessage());

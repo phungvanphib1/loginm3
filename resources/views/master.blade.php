@@ -126,6 +126,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- calendar -->
 	<script type="text/javascript" src="{{ asset('assets/js/monthly.js')}}"></script>
 	<script type="text/javascript">
+    
 
     //    @php
     //    if(Session::has('login')){

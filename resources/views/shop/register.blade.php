@@ -16,21 +16,21 @@
   <meta name="generator" content="Themefisher Constra HTML Template v1.0">
 
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+  <link rel="shortcut icon" type="image/x-icon" href="{{asset('shops/images/favicon.png')}}" />
 
   <!-- Themefisher Icon font -->
-  <link rel="stylesheet" href="plugins/themefisher-font/style.css">
+  <link rel="stylesheet" href="{{asset('shops/plugins/themefisher-font/style.css')}}">
   <!-- bootstrap.min css -->
-  <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{asset('shops/plugins/bootstrap/css/bootstrap.min.css')}}">
 
   <!-- Animate css -->
-  <link rel="stylesheet" href="plugins/animate/animate.css">
+  <link rel="stylesheet" href="{{asset('shops/plugins/animate/animate.css')}}">
   <!-- Slick Carousel -->
-  <link rel="stylesheet" href="plugins/slick/slick.css">
-  <link rel="stylesheet" href="plugins/slick/slick-theme.css">
+  <link rel="stylesheet" href="{{asset('shops/plugins/slick/slick.css')}}">
+  <link rel="stylesheet" href="{{asset('shops/plugins/slick/slick-theme.css')}}">
 
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="{{asset('shops/css/style.css')}}">
 
 </head>
 
@@ -44,29 +44,36 @@
           <a class="logo" href="index.html">
             <img src="images/logo.png" alt="">
           </a>
-          <h2 class="text-center">Create Your Account</h2>
-          <form class="text-left clearfix" action="index.html">
+          <h2 class="text-center">Tạo Tài Khoản Của Bạn</h2>
+          <form class="text-left clearfix" method="POST" action="{{route('shop.checkregister')}}">
+            @csrf
             <div class="form-group">
-              <input type="text" class="form-control"  placeholder="First Name">
+              <input type="text" class="form-control" name="name" placeholder="Họ Và Tên" required="">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control"  placeholder="Last Name">
+              <input type="email" class="form-control" name="email" placeholder="Email" required="">
+              @error('email')
+              <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             </div>
             <div class="form-group">
-              <input type="text" class="form-control"  placeholder="Username">
+              <input type="text" class="form-control" name="phone" placeholder="Số Điện Thoại" required="">
             </div>
             <div class="form-group">
-              <input type="email" class="form-control"  placeholder="Email">
+              <input type="password" class="form-control" name="password"  placeholder="Mật Khẩu" required="">
+              @error('password')
+              <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             </div>
             <div class="form-group">
-              <input type="password" class="form-control"  placeholder="Password">
+              <input type="password" class="form-control" name="confirmpassword" placeholder="Nhập Lại Mật Khẩu" required="">
             </div>
             <div class="text-center">
               <button type="submit" class="btn btn-main text-center">Sign In</button>
             </div>
           </form>
-          <p class="mt-20">Already hava an account ?<a href="login.html"> Login</a></p>
-          <p><a href="forget-password.html"> Forgot your password?</a></p>
+          <p class="mt-20">Bạn đã có tài khoản ?<a href="{{route('shop.viewlogin')}}"> Login</a></p>
+          {{-- <p><a href="forget-password.html"> Forgot your password?</a></p> --}}
         </div>
       </div>
     </div>
@@ -78,30 +85,48 @@
     =====================================-->
 
     <!-- Main jQuery -->
-    <script src="plugins/jquery/dist/jquery.min.js"></script>
+    <script src="{{asset('shops/plugins/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap 3.1 -->
-    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{{asset('shops/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
     <!-- Bootstrap Touchpin -->
-    <script src="plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="{{asset('shops/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js')}}"></script>
     <!-- Instagram Feed Js -->
-    <script src="plugins/instafeed/instafeed.min.js"></script>
+    <script src="{{asset('shops/plugins/instafeed/instafeed.min.js')}}"></script>
     <!-- Video Lightbox Plugin -->
-    <script src="plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
+    <script src="{{asset('shops/plugins/ekko-lightbox/dist/ekko-lightbox.min.js')}}"></script>
     <!-- Count Down Js -->
-    <script src="plugins/syo-timer/build/jquery.syotimer.min.js"></script>
+    <script src="{{asset('shops/plugins/syo-timer/build/jquery.syotimer.min.js')}}"></script>
 
     <!-- slick Carousel -->
-    <script src="plugins/slick/slick.min.js"></script>
-    <script src="plugins/slick/slick-animation.min.js"></script>
+    <script src="{{asset('shops/plugins/slick/slick.min.js')}}"></script>
+    <script src="{{asset('shops/plugins/slick/slick-animation.min.js')}}"></script>
 
     <!-- Google Mapl -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
-    <script type="text/javascript" src="plugins/google-map/gmap.js"></script>
+    <script type="text/javascript" src="{{asset('shops/plugins/google-map/gmap.js')}}"></script>
 
     <!-- Main Js File -->
-    <script src="js/script.js"></script>
+    <script src="{{asset('shops/js/script.js')}}"></script>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script>
+            @php
+           if(Session::has('message')){
+           @endphp
+           Swal.fire({
+                icon: 'error',
+                title: 'Có lỗi!',
+                text: "Xin kiểm tra lại",
+                showClass: {
+                popup: 'swal2-show'
+                    }
+                })
+            @php
+           }
+            @endphp
+
+        </script>
 
   </body>
   </html>

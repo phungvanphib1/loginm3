@@ -135,7 +135,7 @@
 
                                                 @if (Auth::user()->hasPermission('User_adminUpdatePass'))
                                                 <a class="btn mini btn-default" href="{{ route('user.adminpass', $user->id) }}">
-                                                    <i class="fa fa-cog">Admin đổi mật khẩu Mật Khẩu </i>
+                                                    <i class="fa fa-cog">Mật khẩu*</i>
                                                 </a>
                                                 @endif
                                             </div>

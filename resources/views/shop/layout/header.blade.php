@@ -16,7 +16,7 @@
                 } --}}
 
 				<div class="logo text-center">
-					<a href="#">
+					<a href="{{route('shop.index')}}">
 						<!-- replace logo here -->
 						<svg width="135px" height="29px" viewBox="0 0 155 29" version="1.1" xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -33,29 +33,16 @@
 				</div>
 			</div>
 			<div class="col-md-4 col-xs-12 col-sm-4">
+
 				<!-- Cart -->
 				<ul class="top-menu text-right list-inline">
 					<li class="dropdown cart-nav dropdown-slide">
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
 								class="tf-ion-android-cart"></i>Cart</a>
 						<div class="dropdown-menu cart-dropdown">
+
 							<!-- Cart Item -->
-							<div class="media">
-								<a class="pull-left" href="#!">
-									<img class="media-object" src="images/shop/cart/cart-1.jpg" alt="image" />
-								</a>
-								<div class="media-body">
-									<h4 class="media-heading"><a href="#!">Ladies Bag</a></h4>
-									<div class="cart-price">
-										<span>1 x</span>
-										<span>1250.00</span>
-									</div>
-									<h5><strong>$1200</strong></h5>
-								</div>
-								<a href="#!" class="remove"><i class="tf-ion-close"></i></a>
-							</div><!-- / Cart Item -->
-							<!-- Cart Item -->
-							<div class="media">
+							{{-- <div class="media">
 								<a class="pull-left" href="#!">
 									<img class="media-object" src="images/shop/cart/cart-2.jpg" alt="image" />
 								</a>
@@ -68,24 +55,36 @@
 									<h5><strong>$1200</strong></h5>
 								</div>
 								<a href="#!" class="remove"><i class="tf-ion-close"></i></a>
-							</div><!-- / Cart Item -->
+							</div> --}}
+                            <!-- / Cart Item -->
 
-							<div class="cart-summary">
+							{{-- <div class="cart-summary">
 								<span>Total</span>
 								<span class="total-price">$1799.00</span>
-							</div>
+							</div> --}}
+                            @if (isset(Auth()->guard('customers')->user()->name))
+                            <form method="POST" action="{{ route('shoplogout') }}">
+                                @csrf
+                            <a  href="#"onclick="event.preventDefault();
+                            this.closest('form').submit();"> {{Auth()->guard('customers')->user()->name }}: <i class="fa fa-key"></i>Đăng xuất</a>
+                            </form>
+                            @endif
+
 							<ul class="text-center cart-buttons">
-								<li><a href="cart.html" class="btn btn-small">View Cart</a></li>
-								<li><a href="checkout.html" class="btn btn-small btn-solid-border">Checkout</a></li>
+								<li><a href="{{route('shop.cart')}}" class="btn btn-small">Giỏ Hàng</a></li>
+								<li><a href="{{route('checkOuts')}}" class="btn btn-small btn-solid-border">Thanh Toán</a></li>
 							</ul>
+
+                            {{-- {{ auth()->customers()->name }} --}}
 						</div>
 
 					</li><!-- / Cart -->
 
+
 					<!-- Search -->
 					<li class="dropdown search dropdown-slide">
-						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
-								class="tf-ion-ios-search-strong"></i> Search</a>
+						{{-- <a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
+								class="tf-ion-ios-search-strong"></i> Search</a> --}}
 						<ul class="dropdown-menu search-dropdown">
 							<li>
 								<form action="post"><input type="search" class="form-control" placeholder="Search..."></form>
@@ -94,14 +93,15 @@
 					</li><!-- / Search -->
 
 					<!-- Languages -->
-					<li class="commonSelect">
-						<select class="form-control">
-							<option>EN</option>
-							<option>DE</option>
-							<option>FR</option>
-							<option>ES</option>
-						</select>
-					</li><!-- / Languages -->
+                        {{-- <li class="commonSelect">
+                            <select class="form-control">
+                                <option>EN</option>
+                                <option>DE</option>
+                                <option>FR</option>
+                                <option>ES</option>
+                            </select>
+                        </li> --}}
+                    <!-- / Languages -->
 
 				</ul><!-- / .nav .navbar-nav .navbar-right -->
 			</div>

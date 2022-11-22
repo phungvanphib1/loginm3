@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,15 +19,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route::get('adashboard', function () {
+//     return view('shop.dashboardShop');
+// })->name('home');
 
 
 
-Route::get('/login', [UserController::class, 'viewLogin'])->name('login');
+Route::get('/', [UserController::class, 'viewLogin'])->name('login');
 Route::post('handdle-login', [UserController::class, 'login'])->name('handdle-login');
 
 
-Route::get('register', [UserController::class, 'viewRegister'])->name('viewRegister');
-Route::post('handdle-register', [UserController::class, 'register'])->name('handdle-register');
+Route::get('/register', [UserController::class, 'viewRegister'])->name('viewRegister');
+Route::post('/handdle-register', [UserController::class, 'register'])->name('handdle-register');
 
 
 Route::middleware(['auth', 'revalidate'])->group(function () {
@@ -112,17 +116,30 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
 });
 
 Route::prefix('shop')->group(function () {
+
     Route::get('/', [ShopController::class, 'index'])->name('shop.index');
-    Route::get('/cart', [ShopController::class, 'cart'])->name('shop.cart');
+    Route::get('/show/{id}',[ShopController::class, 'show'])->name('shop.showProduct');
+
+Route::get('/viewlogin', [ShopController::class, 'viewlogin'])->name('shop.viewlogin');
+Route::post('/checklogin', [ShopController::class, 'checklogin'])->name('shop.checklogin');
+Route::get('/register', [ShopController::class, 'register'])->name('shop.register');
+Route::post('/checkregister', [ShopController::class, 'checkregister'])->name('shop.checkregister');
+
+    Route::get('/cart', [ShopController::class, 'cart'])->name('shop.cart')->middleware('shoplogin');
+    Route::get('/products', [ShopController::class, 'products'])->name('productall');
+
     Route::get('/store/{id}', [ShopController::class, 'store'])->name('shop.store');
     Route::patch('/update-cart', [ShopController::class, 'update'])->name('update.cart');
     Route::delete('/remove-from-cart/{id}', [ShopController::class, 'remove'])->name('remove.from.cart');
-    Route::get('/checkOuts', [ShopController::class, 'checkOuts'])->name('checkOuts');
-    Route::post('/order', [ShopController::class, 'order'])->name('order');
-    Route::get('/history', [ShopController::class, 'history'])->name('history');
 
-    Route::get('/login', [ShopController::class, 'login'])->name('shop.login');
-    Route::post('/checklogin', [ShopController::class, 'checklogin'])->name('shop.checklogin');
-    Route::get('/register', [ShopController::class, 'register'])->name('shop.register');
-    Route::post('/checkregister', [ShopController::class, 'checkregister'])->name('shop.checkregister');
+    Route::get('/checkOuts', [ShopController::class, 'checkOuts'])->name('checkOuts')->middleware('shoplogin');
+    Route::post('/order', [ShopController::class, 'order'])->name('order');
+
+    Route::get('/history', [ShopController::class, 'history'])->name('history');
+    Route::post('/shoplogout', [ShopController::class, 'logout'])->name('shoplogout');
+
 });
+
+
+
+

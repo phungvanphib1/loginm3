@@ -19,7 +19,7 @@
 
 					<!-- Home -->
 					<li class="dropdown ">
-						<a href="index.html">Home</a>
+						<a href="{{route ('shop.index')}}">Home</a>
 					</li><!-- / Home -->
 
 
@@ -37,16 +37,16 @@
 										<li class="dropdown-header">Pages</li>
 										<li role="separator" class="divider"></li>
 										<li><a href="shop.html">Shop</a></li>
-										<li><a href="checkout.html">Checkout</a></li>
-										<li><a href="cart.html">Cart</a></li>
-										<li><a href="pricing.html">Pricing</a></li>
-										<li><a href="confirmation.html">Confirmation</a></li>
+										<li><a href="{{route('shop.index')}}">Checkout</a></li>
+										<li><a href="{{route('shop.index')}}">Cart</a></li>
+										<li><a href="{{route('shop.index')}}">Pricing</a></li>
+										<li><a href="{{route('shop.index')}}">Confirmation</a></li>
 
 									</ul>
 								</div>
 
 								<!-- Layout -->
-								<div class="col-lg-6 col-md-6 mb-sm-3">
+								{{-- <div class="col-lg-6 col-md-6 mb-sm-3">
 									<ul>
 										<li class="dropdown-header">Layout</li>
 										<li role="separator" class="divider"></li>
@@ -54,7 +54,7 @@
 										<li><a href="shop-sidebar.html">Shop With Sidebar</a></li>
 
 									</ul>
-								</div>
+								</div> --}}
 
 							</div><!-- / .row -->
 						</div><!-- / .dropdown-menu -->
@@ -62,7 +62,7 @@
 
 
 					<!-- Pages -->
-					<li class="dropdown full-width dropdown-slide">
+					{{-- <li class="dropdown full-width dropdown-slide">
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
 							role="button" aria-haspopup="true" aria-expanded="false">Pages <span
 								class="tf-ion-ios-arrow-down"></span></a>
@@ -107,18 +107,18 @@
 
 								<!-- Mega Menu -->
 								<div class="col-sm-3 col-xs-12">
-									<a href="shop.html">
+									<a href="{{route ('shop.index')}}">
 										<img class="img-responsive" src="images/shop/header-img.jpg" alt="menu image" />
 									</a>
 								</div>
 							</div><!-- / .row -->
 						</div><!-- / .dropdown-menu -->
-					</li><!-- / Pages -->
+					</li><!-- / Pages --> --}}
 
 
 
 					<!-- Blog -->
-					<li class="dropdown dropdown-slide">
+					{{-- <li class="dropdown dropdown-slide">
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
 							role="button" aria-haspopup="true" aria-expanded="false">Blog <span
 								class="tf-ion-ios-arrow-down"></span></a>
@@ -129,17 +129,17 @@
 							<li><a href="blog-grid.html">Blog 2 Columns</a></li>
 							<li><a href="blog-single.html">Blog Single</a></li>
 						</ul>
-					</li><!-- / Blog -->
+					</li><!-- / Blog --> --}}
 
 					<!-- Shop -->
 					<li class="dropdown dropdown-slide">
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
-							role="button" aria-haspopup="true" aria-expanded="false">Elements <span
+							role="button" aria-haspopup="true" aria-expanded="false">Products<span
 								class="tf-ion-ios-arrow-down"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="typography.html">Typography</a></li>
-							<li><a href="buttons.html">Buttons</a></li>
-							<li><a href="alerts.html">Alerts</a></li>
+							<li><a href="{{route('productall')}}">Tất cả sản phẩm</a></li>
+							{{-- <li><a href="buttons.html">Buttons</a></li>
+							<li><a href="alerts.html">Alerts</a></li> --}}
 						</ul>
 					</li><!-- / Blog -->
 				</ul><!-- / .nav .navbar-nav -->

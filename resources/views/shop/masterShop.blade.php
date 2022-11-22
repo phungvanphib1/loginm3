@@ -82,7 +82,25 @@ Start Call To Action
     <!-- Main Js File -->
     <script src="{{asset('shops/js/script.js')}}"></script>
 
+    <script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+    <script src="sweetalert2.all.min.js"></script>
+<script>
+     @php
+       if(Session::has('message')){
+       @endphp
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: "{{ Session::get('message') }}",
+            showConfirmButton: false,
+            timer: 1500
+        })
+        @php
+       }
+        @endphp
 
+	</script>
 
   </body>
   </html>
