@@ -7,6 +7,7 @@
                     <h1 class="page-title">Sản phẩm</h1>
                     @if (Auth::user()->hasPermission('Product_create'))
                     <a href="{{ route('product.create') }}" class="w3-button w3-red">Thêm Sản Phẩm</a>
+                    <a href="{{ route('products.exportExcel') }}" class="w3-button w3-red">Xuất file excel</a>
                     @endif
                 </header>
                 <hr>

@@ -69,6 +69,8 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
         Route::put('/softdeletes/{id}', [ProductController::class, 'softdeletes'])->name('product.softdeletes');
         Route::get('/trash', [ProductController::class, 'trash'])->name('product.trash');
         Route::put('/restoredelete/{id}', [ProductController::class, 'restoredelete'])->name('product.restoredelete');
+
+        Route::get('exportExcel', [ProductController::class, 'exportExcel'])->name('products.exportExcel');
     });
     Route::group(['prefix' => 'users'], function () {
         Route::get('/', [UserController::class, 'index'])->name('user.index');
