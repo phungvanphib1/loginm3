@@ -123,6 +123,7 @@ class ShopController extends Controller
         $product = Product::findOrFail($id);
         $cart = session()->get('cart', []);
         if (isset($cart[$id])) {
+            dd($cart);
             $cart[$id]['quantity']++;
         } else {
             $cart[$id] = [
@@ -192,6 +193,7 @@ class ShopController extends Controller
 
     public function remove(Request $request)
     {
+        // dd($request);
         if ($request->id) {
             $cart = session()->get('cart');
             if (isset($cart[$request->id])) {
