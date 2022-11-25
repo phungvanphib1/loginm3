@@ -8,6 +8,19 @@
                     @if (Auth::user()->hasPermission('Product_create'))
                     <a href="{{ route('product.create') }}" class="w3-button w3-red">Thêm Sản Phẩm</a>
                     <a href="{{ route('products.exportExcel') }}" class="w3-button w3-red">Xuất file excel</a>
+                    <a type="button" class="w3-button w3-blue  waves-effect waves-light" data-toggle="modal" data-target="#modalFilterColumns" >Tìm kiếm nâng cao</a>
+                    <form action="" method="GET" id="form-search">
+                            <!-- .nav-tabs -->
+                                <!-- .input-group-prepend -->
+                                {{-- <div class="input-group-prepend"> --}}
+                                    {{-- <button class="w3-button w3-blue" type="button" data-toggle="modal"
+                                        data-target="#modalFilterColumns">Tìm nâng cao</button> --}}
+                                {{-- </div> --}}
+                                <!-- /.input-group-prepend -->
+                            @include('admin.product.advanceSearch')
+                        </form>
+
+
                     @endif
                 </header>
                 <hr>
@@ -34,6 +47,7 @@
                                 <th>Tên Sản Phẩm</th>
                                 <th>Thể loại</th>
                                 <th>Số Lượng</th>
+                                <th>Giá</th>
                                 <th>Hiển Thị</th>
                                 <th data-breakpoints="xs">Tùy Chỉnh</th>
                             </tr>
@@ -43,8 +57,9 @@
                                 <tr data-expanded="true" class="item-{{ $product->id }}">
                                     <td>{{  ++$key }}</td>
                                     <td>{{ $product->name }}</td>
-                                    <td>{{ $product->categories->name}}</td>
+                                    <td>{{ $product->category->name}}</td>
                                     <td>{{ $product->amount }}</td>
+                                    <td>{{ number_format($product->price) }}đ</td>
                                    <td>
                                     <a href="{{ route('product.show', $product->id) }}">
 

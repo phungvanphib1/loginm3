@@ -28,9 +28,9 @@
           <tr>
             <th scope="row">{{++$key}}</th>
             <td>{{$item->customer->name}}</td>
-            <td>{{$item->customer->address}}</td>
             <td>{{$item->customer->email}}</td>
             <td>{{$item->customer->phone}}</td>
+            <td>{{$item->customer->address}}</td>
             <td>{{$item->date_at}}</td>
             <td>{{number_format($item->total)}}</td>
             <td>

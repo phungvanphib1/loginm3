@@ -42,7 +42,7 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $product->id }}</td>
                                     <td>{{ $product->name }}</td>
-                                    <td> {{ $product->categories->name}} </td>
+                                    <td> {{ $product->category->name}} </td>
                                     <td> {{ $product->amount}} </td>
                                     <td><img src="{{ asset('storage/images/' . $product->image) }}" alt="" width='100px' height="120px"></td>
                                     <td>

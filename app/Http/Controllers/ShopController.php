@@ -29,7 +29,8 @@ class ShopController extends Controller
         return view('shop.dashboardShop', $param);
     }
 
-    public function products(){
+    public function products()
+    {
         $products = Product::get();
         $param = [
             'products' => $products
@@ -83,13 +84,12 @@ class ShopController extends Controller
         $customer->email = $request->email;
         $customer->password = bcrypt($request->password);
 
-            if ($request->password == $request->confirmpassword) {
-                $customer->save();
-                return redirect()->route('shop.viewlogin')->with($notifications);
-            }else{
-                return redirect()->route('shop.register')->with($notification);
-
-            }
+        if ($request->password == $request->confirmpassword) {
+            $customer->save();
+            return redirect()->route('shop.viewlogin')->with($notifications);
+        } else {
+            return redirect()->route('shop.register')->with($notification);
+        }
     }
 
     public function cart()
@@ -116,14 +116,13 @@ class ShopController extends Controller
     public function store($id)
     {
         $notification = [
-            'message' => 'Thêm Thành Công!',
+            'message' => 'Thêm Thành Công!', 
             'alert-type' => 'success'
         ];
 
         $product = Product::findOrFail($id);
         $cart = session()->get('cart', []);
         if (isset($cart[$id])) {
-            dd($cart);
             $cart[$id]['quantity']++;
         } else {
             $cart[$id] = [
@@ -138,7 +137,7 @@ class ShopController extends Controller
         session()->put('cart', $cart);
         $data = [];
         $data['cart'] = session()->has('cart');
-        return redirect()->route('shop.index')->with( $notification);
+        return redirect()->route('shop.index')->with($notification);
     }
 
     /**
@@ -155,7 +154,7 @@ class ShopController extends Controller
             'product' => $product,
             'categorys' => $categorys
         ];
-        return view('shop.showproduct',$param);
+        return view('shop.showproduct', $param);
     }
 
     /**
@@ -220,29 +219,24 @@ class ShopController extends Controller
             $data->email = $request->email;
             $data->phone = $request->phone;
             $data->address = $request->address;
-            $data->save();
 
-            if(isset($request->note))
-            {
-                $data->note=$request->note;
+            if (isset($request->note)) {
+                $data->note = $request->note;
             }
+            $data->save();
 
             $order = new Order();
             $order->customer_id = Auth::guard('customers')->user()->id;
             $order->date_at = date('Y-m-d H:i:s');
             $order->total = $request->totalAll;
             $order->save();
-
         }
-        // try {
-            // if ($order) {
                 $count_product = count($request->product_id);
                 for ($i = 0; $i < $count_product; $i++) {
                     $orderItem = new OrderDetail();
                     $orderItem->order_id =  $order->id;
                     $orderItem->product_id = $request->product_id[$i];
                     $orderItem->quantity = $request->quantity[$i];
-                    // dd($request);
                     $orderItem->total = $request->total[$i];
                     $orderItem->save();
                     session()->forget('cart');
@@ -253,10 +247,11 @@ class ShopController extends Controller
                 $notification = [
                     'message' => 'success',
                 ];
-                // dd($request);
-                // alert()->success('Thêm Đơn Đặt: '.$request->name,'Thành Công');
-                return redirect()->route('shop.index')->with($notification);;
-            // }
+
+        // dd($request);
+        // alert()->success('Thêm Đơn Đặt: '.$request->name,'Thành Công');
+        return redirect()->route('shop.index')->with($notification);;
+        // }
         // } catch (\Exception $e) {
         //     // dd($request);
         //     Log::error($e->getMessage());

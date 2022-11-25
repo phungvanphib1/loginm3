@@ -37,6 +37,7 @@
                                         <input name="address" type="text" class="form-control"
                                             value="{{ Auth()->guard('customers')->user()->address }}" id="user_address"
                                             placeholder="">
+                                            <div style="color: red">Vui lòng kiểm tra lại địa chỉ giao hàng nhé</div>
                                     </div>
                                     <div class="checkout-country-code clearfix">
                                         <div class="form-group">
@@ -52,7 +53,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="user_country">Ghi chú*</label>
-                                        <input type="text" class="form-control" id="user_country" name="note">
+                                        <input type="text" class="form-control" name="note">
                                     </div>
 
                                         {{-- <a href="{{ route('checkOuts') }}" class="btn btn-main pull-right">Checkout</a> --}}

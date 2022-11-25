@@ -7,7 +7,7 @@
     <h1>Giá {{$productshow->price}}</h1>
     <h1>Số lượng {{$productshow->amount}}</h1>
     <h1>Mô tả {{$productshow->description}}</h1>
-    <h1>thể loại {{$productshow->categories->name}}</h1>
+    <h1>thể loại {{$productshow->category->name}}</h1>
 
 </section>
 @endsection

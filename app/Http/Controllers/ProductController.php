@@ -18,12 +18,29 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', Product::class);
-        $products =Product::search()->paginate(4);
+
+        $products = Product::select('*');
+
+        if (!empty($request->search)) {
+            $search = $request->search;
+            $products = $products->Search($search);
+        }
+        if (!empty($request->category_id)) {
+            $products->NameCate($request)
+            ->filterPrice(request(['startPrice', 'endPrice']))
+            ->filterDate(request(['start_date', 'end_date']));
+        }
+        $products->filterPrice(request(['startPrice', 'endPrice']));
+        $products->filterDate(request(['start_date', 'end_date']));
+
+        $products = $products->orderBy('id', 'DESC')->paginate(4);
+        $categories = Category::get();
         $param = [
             'products' => $products,
+            'categories' => $categories,
         ];
 
         return view('admin.product.index', $param);
