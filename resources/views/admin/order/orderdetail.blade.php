@@ -34,7 +34,8 @@
                                 @endforeach
                             </tbody>
                         </table>
-                       Tổng Tiền của đơn hàng: {{number_format($total)}} vnd
+                        Tổng Tiền của đơn hàng: {{number_format($total)}} vnd
+                        {{-- Tổng Tiền của đơn hàng: {{$items->order->note}} vnd --}}
                     </main>
                 </div>
             </div>

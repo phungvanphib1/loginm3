@@ -6,6 +6,8 @@
             <div class="row">
                 <div class="title text-center">
                     <h2>Sản Phẩm</h2>
+                    {{-- {!!$categories!!} --}}
+
                 </div>
             </div>
             <div class="row">
@@ -40,6 +42,9 @@
             </div>
         </div>
     </section>
+    {{-- @foreach ( $categories as $cate)
+                        {{$cate->name}} <br>
+    @endforeach --}}
     <video class="video-stream html5-main-video"  autoplay muted loop width="100%" height="500" style="background-color: rgba(0, 0, 0, 0.781)" controls controlslist="nodownload">
         <source  src="{{ asset('assets/video/demoNow.mp4') }}">
      </video>

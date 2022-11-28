@@ -78,7 +78,7 @@
                         <span>Loại:</span>
 
 						<ul>
-							<li><a href="#"> {{$product->categories->name}}</a></li>
+							<li><a href="#"> {{$product->category->name}}</a></li>
 						</ul>
 					</div>
 					<a href="{{route('shop.store',$product->id)}}" id="{{ $product->id }}" class="btn btn-main mt-20">Add To Cart</a>

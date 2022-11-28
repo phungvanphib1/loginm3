@@ -84,10 +84,15 @@ class ShopController extends Controller
         $customer->email = $request->email;
         $customer->password = bcrypt($request->password);
 
-        if ($request->password == $request->confirmpassword) {
-            $customer->save();
-            return redirect()->route('shop.viewlogin')->with($notifications);
-        } else {
+        try {
+            if ($request->password == $request->confirmpassword) {
+                $customer->save();
+                return redirect()->route('shop.viewlogin')->with($notifications);
+            } else {
+                return redirect()->route('shop.register')->with($notification);
+            }
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return redirect()->route('shop.register')->with($notification);
         }
     }
@@ -116,7 +121,7 @@ class ShopController extends Controller
     public function store($id)
     {
         $notification = [
-            'message' => 'Thêm Thành Công!', 
+            'message' => 'Thêm Thành Công!',
             'alert-type' => 'success'
         ];
 
@@ -219,18 +224,19 @@ class ShopController extends Controller
             $data->email = $request->email;
             $data->phone = $request->phone;
             $data->address = $request->address;
-
-            if (isset($request->note)) {
-                $data->note = $request->note;
-            }
             $data->save();
 
             $order = new Order();
             $order->customer_id = Auth::guard('customers')->user()->id;
             $order->date_at = date('Y-m-d H:i:s');
             $order->total = $request->totalAll;
+            if (isset($request->note)) {
+                $order->note = $request->note;
+            }
             $order->save();
         }
+        try {
+            if ($order) {
                 $count_product = count($request->product_id);
                 for ($i = 0; $i < $count_product; $i++) {
                     $orderItem = new OrderDetail();
@@ -247,17 +253,12 @@ class ShopController extends Controller
                 $notification = [
                     'message' => 'success',
                 ];
-
-        // dd($request);
-        // alert()->success('Thêm Đơn Đặt: '.$request->name,'Thành Công');
-        return redirect()->route('shop.index')->with($notification);;
-        // }
-        // } catch (\Exception $e) {
-        //     // dd($request);
-        //     Log::error($e->getMessage());
-        //     // toast('Đặt hàng thấy bại!', 'error', 'top-right');
-        //     return redirect()->route('shop.index');
-        // }
+                return redirect()->route('shop.index')->with($notification);
+            }
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->route('shop.index');
+        }
     }
 
     /**
